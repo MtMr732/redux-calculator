@@ -1,25 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
+import { 
+  onNumberClick,
+  onPlusClick,
+  onMinusClick,
+  onMultiplyClick,
+  onDivideClick,
+  onClearClick,
+} from "./redux/actions";
+import {Button} from "./components/Button";
+import Result from "./components/Result";
+import './App.scss'
 
-function App() {
+
+const App = (props) =>{
+  const {
+    calculator,
+    onNumberClick,
+    onPlusClick,
+    onMinusClick,
+    onMultiplyClick,
+    onDivideClick,
+    onClearClick,
+  } = props;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <div className="result">
+        <Result result={calculator}/>
+      </div>
+      <div className="button-wrapper">
+        <div className="number">
+          <div className="upper">
+            <Button text={'7'} />
+            <Button text={'8'} />
+            <Button text={'9'} />
+          </div>
+          <div className="middle">
+            <Button text={'4'} />
+            <Button text={'5'} />
+            <Button text={'6'} />
+          </div>
+          <div className="lower">
+            <Button text={'1'} />
+            <Button text={'2'} />
+            <Button text={'3'} />
+          </div>
+          <div className="bottom">
+            <Button text={'0'} />
+            <Button text={'AC'} />
+            <Button text={'='} />
+          </div>
+        </div>
+        <div className="operator">
+            <Button text ={'÷'} />
+            <Button text ={'×'} />
+            <Button text ={'-'} />
+            <Button text ={'+'} />
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 
-export default App;
+const mapStateToProps = (state) =>{
+  return {
+    calculator: state.calculator,
+  }
+}
+
+export default connect(mapStateToProps,{
+  onNumberClick,
+  onPlusClick,
+  onMinusClick,
+  onMultiplyClick,
+  onDivideClick,
+  onClearClick,
+})(App);
