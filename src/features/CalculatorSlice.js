@@ -1,14 +1,6 @@
-import {
-  INPUT_NUMBER,
-  PLUS,
-  MINUS,
-  MULTIPLY,
-  DIVIDE,
-  EQUAL,
-  CLEAR,
-} from "../actions/types";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialAppState = {
+const initialState = {
   inputValue: 0,
   operator: "",
   resultValue: 0,
@@ -16,15 +8,18 @@ const initialAppState = {
   showResult: "",
 };
 
-const calculator = (state = initialAppState, action) => {
-  switch (action.type) {
-    case INPUT_NUMBER:
+export const CalculatorSlice = createSlice({
+  name: "calculator",
+  initialState,
+  reducers: {
+    selectValue: (state, action) => {
       return {
         ...state,
-        inputValue: state.inputValue * 10 + action.number,
+        inputValue: state.inputValue * 10 + action.payload,
         showResult: false,
       };
-    case PLUS:
+    },
+    plus: (state) => {
       if (state.calculate === true) {
         return {
           ...state,
@@ -43,7 +38,8 @@ const calculator = (state = initialAppState, action) => {
           showResult: false,
         };
       }
-    case MINUS:
+    },
+    minus: (state) => {
       if (state.calculate === true) {
         return {
           ...state,
@@ -62,7 +58,8 @@ const calculator = (state = initialAppState, action) => {
           showResult: false,
         };
       }
-    case MULTIPLY:
+    },
+    multiply: (state) => {
       if (state.calculate === true) {
         return {
           ...state,
@@ -81,7 +78,8 @@ const calculator = (state = initialAppState, action) => {
           showResult: false,
         };
       }
-    case DIVIDE:
+    },
+    divide: (state) => {
       if (state.calculate === true) {
         return {
           ...state,
@@ -100,8 +98,8 @@ const calculator = (state = initialAppState, action) => {
           showResult: false,
         };
       }
-
-    case CLEAR:
+    },
+    clear: () => {
       return {
         inputValue: 0,
         operator: "",
@@ -109,8 +107,8 @@ const calculator = (state = initialAppState, action) => {
         resultValue: "",
         showResult: false,
       };
-
-    case EQUAL:
+    },
+    equal: (state) => {
       switch (state.operator) {
         case "+":
           return {
@@ -149,11 +147,11 @@ const calculator = (state = initialAppState, action) => {
             state,
           };
       }
-    default:
-      return {
-        state,
-      };
-  }
-};
+    },
+  },
+});
 
-export default calculator;
+export const { selectValue, plus, minus, multiply, divide, clear, equal } =
+  CalculatorSlice.actions;
+
+export default CalculatorSlice;
